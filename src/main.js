@@ -1,2 +1,3 @@
-const x = jQuery(".test");
-x.children().print();
+const div1 = document.querySelector(".test");
+
+const div2 = $(".test");

@@ -133,11 +133,10 @@ window.jQuery = function (selectorOrArray) {
     elements = document.querySelectorAll(selectorOrArray);
   } else if (selectorOrArray instanceof Array) {
     elements = selectorOrArray;
-  } // api 可以操作elements
+  } // api 可以操作 elements
 
 
   return {
-    oldApi: selectorOrArray.oldApi,
     find: function find(selector) {
       var array = [];
 
@@ -146,19 +145,9 @@ window.jQuery = function (selectorOrArray) {
         array = array.concat(elements2);
       }
 
-      array.oldApi = this;
-      return jQuery(array);
-    },
-    end: function end() {
-      return this.oldApi;
-    },
-    // 闭包：函数访问外部变量
-    addClass: function addClass(className) {
-      for (var i = 0; i < elements.length; i++) {
-        elements[i].classList.add(className);
-      }
+      array.oldApi = this; // this 是 旧 api
 
-      return this;
+      return jQuery(array);
     },
     each: function each(fn) {
       for (var i = 0; i < elements.length; i++) {
@@ -176,15 +165,27 @@ window.jQuery = function (selectorOrArray) {
       });
       return jQuery(array);
     },
-    print: function print() {
-      console.log(elements);
-    },
     children: function children() {
       var array = [];
       this.each(function (node) {
         array.push.apply(array, _toConsumableArray(node.children));
       });
       return jQuery(array);
+    },
+    // 闭包: 函数访问外部变量
+    addClass: function addClass(className) {
+      for (var i = 0; i < elements.length; i++) {
+        elements[i].classList.add(className);
+      }
+
+      return this;
+    },
+    print: function print() {
+      console.log(elements);
+    },
+    oldApi: selectorOrArray.oldApi,
+    end: function end() {
+      return this.oldApi; // this 是 新 api
     }
   };
 };
@@ -216,7 +217,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51214" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61627" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
